@@ -1,0 +1,53 @@
+﻿\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,tabu,enumerate,tikz}
+\usetikzlibrary{automata,positioning}
+
+\title{Assignment 4}
+\author{David Cobbley, Sasha Fahrenkopf \& Max Marchuk}
+\date{November 19th 2014}
+
+\begin{document}
+
+\maketitle
+
+
+\paragraph{Problem 1} Show that Turing machines with left reset recognize
+the class of Turing-recognizable languages.
+\paragraph{} Going left is equivalent to reset plus r-1, that is to say if a reset is encountered the tape head would reset all the way to the left, then move right to a position of r-1.
+
+
+\paragraph{Problem 2} Give the informal descriptions for Turing machines that decide the following languages
+
+\begin{enumerate}[a)]
+
+\item $\{w \;|\; \text{ w contains twice as many 0s as 1s } \}$
+
+\begin{enumerate}[1)]
+\item Scan right until a 1 is encountered. If a 1 exists, cross it off. If no 1 exists, scan for o's and reject if found. If no 0's and no 1's, accept.
+\item Return tape head to the beginning.
+\item Scan until a 0 is encountered, cross off. if no zero is found, reject. else continue scanning again for another 0. If a 0 is found cross it off, or reject if no 0 is found.
+\item Return tape to beginning
+\item Go to step 1
+\end{enumerate}
+
+\item  $\{a + b = c \;|\; a, b, c \in $\{0, 1$\} ∗ a\text{and the binary numbers represented by a and b sum to c} \}$
+
+
+\end{enumerate}
+
+
+\paragraph{Problem 3} Show that the Turing-decidable languages are closed under the following:
+\begin{enumerate}[a)]
+
+\item Union
+\item Intersection
+\item Complement
+
+\end{enumerate}
+
+
+\paragraph{Problem 4} Show that the Turing-recognizable languages are closed under concatenation.
+
+
+\end{document}
