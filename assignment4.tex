@@ -5,7 +5,7 @@
 
 \title{Assignment 4}
 \author{David Cobbley, Sasha Fahrenkopf \& Max Marchuk}
-\date{November 19th 2014}
+\date{November 19 2014}
 
 \begin{document}
 
@@ -31,7 +31,69 @@ the class of Turing-recognizable languages.
 \item Go to step 1
 \end{enumerate}
 
-\item  $\{a + b = c \;|\; a, b, c \in $\{0, 1$\} ∗ a\text{and the binary numbers represented by a and b sum to c} \}$
+\item  $\{a + b = c \;|\; a, b, c \in $\{0, 1$\}^* \text{ and the binary numbers represented by a and b sum to c} \}$
+
+\begin{enumerate}[1)]
+
+\item Reject if not in the form $a + b = c$.
+
+% I'm making the two strings the same length by filling in the blanks with zeros 
+% so I don't have to think about them. I assumed a has at least one character though...
+
+
+% Sub-Case: Not Carrying
+\item Case: Not Carrying
+
+    \begin{enumerate}[(2.a)]
+    
+    % Step : evaulate the right-most character in a
+    \item Return tape head to beginning of string. Scan right until the first marked character. Move tape head left one character. If the + character is reached, stop scan and move tape head left one character. If the character is a 0, mark character and go to step 2.b. If the character is a 1, mark character go to step 2.c.
+    
+    % Step (b): A = 0, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If the character is 0, mark and go to step 2.d.  If the character is a 1, mark and go to step 3.e.
+    
+    % Step (c): A = 1, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If the character is 0, mark and go to Step 2.e.  If the character is a 1, mark and go to step Step 2.f.
+    
+    % Step (d): ZERO + ZERO
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1 or blank. Mark character, return to Step 2.
+    
+    % Step (e): ZERO + ONE
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0 or blank. Mark character, return to Step 2.
+    
+    % Step (f): ONE + ONE
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1 or blank. Mark character, go to Step 3.
+    
+
+    \end{enumerate}
+    
+    
+% Sub-Cases: Carrying
+\item Case: Carrying
+
+    \begin{enumerate}[(3.a)]
+    
+    % Step : evaulate the right-most character in a
+    \item Return tape head to beginning of string. Scan right until the first unmarked character. If the + character is reached, stop scan and move tape head left one character. If the character is marked, go to Step 3.b. If the character is 0, mark character and go to step 3.b. If the character is 1, mark character go to step 3.c.
+    
+    % Step : A = 0, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If the + character is reached, stop scan and move tape head right one character. If the character is marked, go to Step 3.d. If the character is 0, mark and go to step 3.d.  If the character is a 1, mark and go to step Step 3.e.
+    
+    % Step : A = 1, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. If the + character is reached, ( Reject? ).  Scan left until the first unmarked character. If the character is 0, mark and go to Step 3.e.  If the character is a 1, mark and go to step Step 3.f.
+    
+    % Step : ZERO + ZERO
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0.  Mark character, return to Step 3.
+    
+    % Step : ZERO + ONE
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1. Return and repeat Step 2.
+    
+    % Step : ONE + ONE
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0. Go to Step 3. 
+    
+
+    \end{enumerate}
+    
 
 
 \end{enumerate}
@@ -41,13 +103,53 @@ the class of Turing-recognizable languages.
 \begin{enumerate}[a)]
 
 \item Union
+
+\begin{proof}
+
+Let M$_{1}$ be a decidable Turing Machine for L$_{1}$ and M$_{2}$ be a decidable Turing Machine for L$_{2}$. The decidable Turing Machine M for L$_{1} \cup$ L$_{2}$ can be constructed such that on input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ rejects, go to Step 2. Otherwise accept.
+\item Simulate M$_{2}$ with input w. If M$_{1}$ rejects, reject. Otherwise accept.
+\end{enumerate}
+
+Because a decidable Turing Machine M can be constructed to evaluate L$_{1} \cup$ L$_{2}$, Turing-decidable languages are closed under union.
+
+\end{proof}
+
 \item Intersection
+
+\begin{proof}
+
+Let M$_{1}$ be a decidable Turing Machine for L$_{1}$ and M$_{2}$ be a decidable Turing Machine for L$_{2}$. The decidable Turing Machine M for L$_{1} \cap$ L$_{2}$ can be constructed such that on input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ accepts, go to Step 2. Otherwise reject.
+\item Simulate M$_{2}$ with input w. If M$_{1}$ rejects, reject. Otherwise accept.
+\end{enumerate}
+
+Because a decidable Turing Machine M can be constructed to evaluate L$_{1} \cap$ L$_{2}$, Turing-decidable languages are closed under intersection.
+
+\end{proof}
+
 \item Complement
+
+\begin{proof}
+
+Let M$_{1}$ be a decidable Turing Machine for L$_{1}$. The decidable Turing Machine M for L$'$ can be constructed such that on input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ accepts, reject. Otherwise accept.
+\end{enumerate}
+
+Because a decidable Turing Machine M can be constructed to evaluate L$'$, Turing-decidable languages are closed under complement.
+
+\end{proof}
 
 \end{enumerate}
 
 
 \paragraph{Problem 4} Show that the Turing-recognizable languages are closed under concatenation.
 
-
+\end{enumerate}
 \end{document}
