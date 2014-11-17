@@ -49,6 +49,7 @@ M = "On input w
 \item Go to step 1"
 \end{enumerate}
 
+<<<<<<< HEAD
 
 \item  $\{a + b = c \;|\; a, b, c \in $\{0, 1$\}^* \text{ and the binary numbers represented by a and b sum to c} \}$
 
@@ -56,6 +57,10 @@ Let L = $\{a + b = c \;|\; a, b, c \in $\{0, 1$\}^* \text{ and the binary number
 
 M = "On input w
 
+=======
+\item  $\{a + b = c \;|\; a, b, c \in $\{0, 1$\}^* \text{ and the binary numbers represented by a and b sum to c} \}$
+
+>>>>>>> origin/master
 \begin{enumerate}[1)]
 
 \item Reject if not in the form $a + b = c$.
@@ -70,6 +75,7 @@ M = "On input w
     \begin{enumerate}[(2.a)]
     
     % Step : evaulate the right-most character in a
+<<<<<<< HEAD
     \item Return tape head to beginning of string. Scan right until the first marked character. Move tape head left one character. If the + character is reached, stop scan and move tape head left one character. If the character is a 0, mark character and go to step 2.b. If it's a blank, go to step 2.b. If the character is a 1, mark character go to step 2.c.
 
     % Step (b): A = blank/0. evaluate right-most character in b
@@ -85,6 +91,23 @@ M = "On input w
     \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0 or blank, If it's a 1, mark character, return to Step 2.
     
     % Step (f): a = 1, b = 1 -> (3)
+=======
+    \item Return tape head to beginning of string. Scan right until the first marked character. Move tape head left one character. If the + character is reached, stop scan and move tape head left one character. If the character is a 0, mark character and go to step 2.b. If the character is a 1, mark character go to step 2.c.
+    
+    % Step (b): A = 0, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If the character is 0, mark and go to step 2.d.  If the character is a 1, mark and go to step 3.e.
+    
+    % Step (c): A = 1, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If the character is 0, mark and go to Step 2.e.  If the character is a 1, mark and go to step Step 2.f.
+    
+    % Step (d): ZERO + ZERO
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1 or blank. Mark character, return to Step 2.
+    
+    % Step (e): ZERO + ONE
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0 or blank. Mark character, return to Step 2.
+    
+    % Step (f): ONE + ONE
+>>>>>>> origin/master
     \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1 or blank. Mark character, go to Step 3.
     
 
@@ -96,6 +119,7 @@ M = "On input w
 
     \begin{enumerate}[(3.a)]
     
+<<<<<<< HEAD
     % Step a : Evaluate a
     \item Return tape head to beginning of string. Scan right until the first marked character. Go left one. If you reach a blank, go to 3.b. If the + character is reached, stop scan and move tape head left one character. If the character is marked, go to Step 3.b. If the character is 0, mark character and go to step 3.b. If the character is 1, mark character go to step 3.c.
     
@@ -113,6 +137,25 @@ M = "On input w
     
     % Step f: a = 1, b = 1
     \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0 or a blank. If it is a 1, cross it out and go to Step 3."
+=======
+    % Step : evaulate the right-most character in a
+    \item Return tape head to beginning of string. Scan right until the first unmarked character. If the + character is reached, stop scan and move tape head left one character. If the character is marked, go to Step 3.b. If the character is 0, mark character and go to step 3.b. If the character is 1, mark character go to step 3.c.
+    
+    % Step : A = 0, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If the + character is reached, stop scan and move tape head right one character. If the character is marked, go to Step 3.d. If the character is 0, mark and go to step 3.d.  If the character is a 1, mark and go to step Step 3.e.
+    
+    % Step : A = 1, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. If the + character is reached, ( Reject? ).  Scan left until the first unmarked character. If the character is 0, mark and go to Step 3.e.  If the character is a 1, mark and go to step Step 3.f.
+    
+    % Step : ZERO + ZERO
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0.  Mark character, return to Step 3.
+    
+    % Step : ZERO + ONE
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1. Return and repeat Step 2.
+    
+    % Step : ONE + ONE
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0. Go to Step 3. 
+>>>>>>> origin/master
     
 
     \end{enumerate}
@@ -129,6 +172,7 @@ M = "On input w
 
 \begin{proof}
 
+<<<<<<< HEAD
 Let M$_{1}$ be a Turing Machine for decidable L$_{1}$ and M$_{2}$ be a Turing Machine for decidable L$_{2}$. A Turing Machine M for L$_{1} \cup$ L$_{2}$ can be constructed such that:
 
 "On input w:
@@ -139,6 +183,16 @@ Let M$_{1}$ be a Turing Machine for decidable L$_{1}$ and M$_{2}$ be a Turing Ma
 \end{enumerate}
 
 The decidable Turing Machine M can be constructed to evaluate L$_{1} \cup$ L$_{2}$ which accepts if either M$_{1}$ or M$_{2}$ accepts and rejects if both reject, thus Turing-decidable languages are closed under union.
+=======
+Let M$_{1}$ be a decidable Turing Machine for L$_{1}$ and M$_{2}$ be a decidable Turing Machine for L$_{2}$. The decidable Turing Machine M for L$_{1} \cup$ L$_{2}$ can be constructed such that on input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ rejects, go to Step 2. Otherwise accept.
+\item Simulate M$_{2}$ with input w. If M$_{1}$ rejects, reject. Otherwise accept.
+\end{enumerate}
+
+Because a decidable Turing Machine M can be constructed to evaluate L$_{1} \cup$ L$_{2}$, Turing-decidable languages are closed under union.
+>>>>>>> origin/master
 
 \end{proof}
 
@@ -146,6 +200,7 @@ The decidable Turing Machine M can be constructed to evaluate L$_{1} \cup$ L$_{2
 
 \begin{proof}
 
+<<<<<<< HEAD
 Let M$_{1}$ be a Turing Machine for decidable L$_{1}$ and M$_{2}$ be a Turing Machine for decidable L$_{2}$. A Turing Machine M for L$_{1} \cap$ L$_{2}$ can be constructed such that:
 \\"On input w:
 
@@ -155,12 +210,24 @@ Let M$_{1}$ be a Turing Machine for decidable L$_{1}$ and M$_{2}$ be a Turing Ma
 \end{enumerate}
 
 The decidable Turing Machine M can be constructed to evaluate L$_{1} \cap$ L$_{2}$ which rejects if either M$_{1}$ or M$_{2}$ reject and accepts if both accept, thus Turing-decidable languages are closed under intersection.
+=======
+Let M$_{1}$ be a decidable Turing Machine for L$_{1}$ and M$_{2}$ be a decidable Turing Machine for L$_{2}$. The decidable Turing Machine M for L$_{1} \cap$ L$_{2}$ can be constructed such that on input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ accepts, go to Step 2. Otherwise reject.
+\item Simulate M$_{2}$ with input w. If M$_{1}$ rejects, reject. Otherwise accept.
+\end{enumerate}
+
+Because a decidable Turing Machine M can be constructed to evaluate L$_{1} \cap$ L$_{2}$, Turing-decidable languages are closed under intersection.
+
+>>>>>>> origin/master
 \end{proof}
 
 \item Complement
 
 \begin{proof}
 
+<<<<<<< HEAD
 Let M$_{1}$ be a decidable Turing Machine for L$_{1}$. A decidable Turing Machine M for L$'$ can be constructed such that:
 \\"On input w:
 
@@ -172,17 +239,31 @@ The decidable Turing Machine M can be constructed to evaluate L$'$, thus Turing-
 
 \end{proof}
 
+=======
+Let M$_{1}$ be a decidable Turing Machine for L$_{1}$. The decidable Turing Machine M for L$'$ can be constructed such that on input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ accepts, reject. Otherwise accept.
+>>>>>>> origin/master
 \end{enumerate}
 
+Because a decidable Turing Machine M can be constructed to evaluate L$'$, Turing-decidable languages are closed under complement.
 
+<<<<<<< HEAD
 \paragraph{Problem 4} Show that the Turing-recognizable languages are closed under concatenation.
 % David's sreaming comment:  WHY DOES THIS JUST FEEL LIKE INTERSECTION?
 % Sasha's cool, collected response: Because it's very similar.  :) 
+=======
+\end{proof}
+
+\end{enumerate}
+>>>>>>> origin/master
 
 \begin{proof}
 Let M$_{1}$ be a Turing Machine for recognizable L$_{1}$ and M$_{2}$ be a Turing Machine for recognizable L$_{2}$.  A Turing Machine M for L$_{1} \circ $ L$_{2}$ can be constructed such that:
 \\"On input w:
 
+<<<<<<< HEAD
 \begin{enumerate} [1.]
 \item Simulate M$_{1}$ with input w. If M$_{1}$ rejects, reject. If M$_{1}$ accepts, go to Step 2.
 \item Simulate M$_{2}$ with input w. If M$_{2}$ rejects, reject. If M$_{2}$ accepts, accept."
@@ -190,5 +271,9 @@ Let M$_{1}$ be a Turing Machine for recognizable L$_{1}$ and M$_{2}$ be a Turing
 
 
 \end{proof}
+=======
+\paragraph{Problem 4} Show that the Turing-recognizable languages are closed under concatenation.
+
+>>>>>>> origin/master
 \end{enumerate}
 \end{document}
