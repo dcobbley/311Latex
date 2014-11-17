@@ -5,7 +5,7 @@
 
 \title{Assignment 4}
 \author{David Cobbley, Sasha Fahrenkopf \& Max Marchuk}
-\date{November 19th 2014}
+\date{November 19 2014}
 
 \begin{document}
 
@@ -14,7 +14,22 @@
 
 \paragraph{Problem 1} Show that Turing machines with left reset recognize
 the class of Turing-recognizable languages.
-\paragraph{} Going left is equivalent to reset plus r-1, that is to say if a reset is encountered the tape head would reset all the way to the left, then move right to a position of r-1.
+\paragraph{} 
+Let M be a Turing Machine for that simulates any left reset Turing Machine R. When  R moves the tape head right, M also moves the tape head right.  When R does a reset, M moves it's tape head all the way to the left.
+
+R can simulate M in a similar manner. When M moves the tape head right, R moves it's tape head right. When M moves left, R does the following:
+\begin{enumerate}[1.]
+
+\item Mark the current position on the tape
+\item Reset the tape head
+\item Mark the first spot on the tape. Reset the tape head.
+\item Scan right until a mark is encountered. Move tape head right once.
+% Returned to original position on tape
+\item If there is a mark, erase the mark. Reset the tape head. Scan right until a mark and halt. This is one position to the left.
+% Still trying to get to the original position on the tape
+\item If there is not a mark, mark the position of the tape head. Reset the tape head. Scan right until a mark and erase the mark. Reset the tape head and return to step 4. 
+
+\end {enumerate}
 
 
 \paragraph{Problem 2} Give the informal descriptions for Turing machines that decide the following languages
@@ -22,16 +37,86 @@ the class of Turing-recognizable languages.
 \begin{enumerate}[a)]
 
 \item $\{w \;|\; \text{ w contains twice as many 0s as 1s } \}$
+\\ \\Let L = $\{w \;|\; \text{ w contains twice as many 0s as 1s } \}$. A Turing Machine M decides M when:
+
+M = "On input w
 
 \begin{enumerate}[1)]
-\item Scan right until a 1 is encountered. If a 1 exists, cross it off. If no 1 exists, scan for o's and reject if found. If no 0's and no 1's, accept.
+\item Scan right until a 1 is encountered. If a 1 exists, cross it off. If no 1 exists, scan for 0s and reject if found. If no 0s and no 1s, accept.
 \item Return tape head to the beginning.
-\item Scan until a 0 is encountered, cross off. if no zero is found, reject. else continue scanning again for another 0. If a 0 is found cross it off, or reject if no 0 is found.
-\item Return tape to beginning
-\item Go to step 1
+\item Scan right until a 0 is encountered, cross off. If no zero is found, reject. Reset tape head to beginning. Scan right until a 0 is encountered. If a 0 is found cross it off. Reject if no 0 is found.
+\item Return tape head to beginning
+\item Go to step 1"
 \end{enumerate}
 
-\item  $\{a + b = c \;|\; a, b, c \in $\{0, 1$\} ∗ a\text{and the binary numbers represented by a and b sum to c} \}$
+
+\item  $\{a + b = c \;|\; a, b, c \in $\{0, 1$\}^* \text{ and the binary numbers represented by a and b sum to c} \}$
+
+Let L = $\{a + b = c \;|\; a, b, c \in $\{0, 1$\}^* \text{ and the binary numbers represented by a and b sum to c} \}$ A Turing Machine M decides M when:
+
+M = "On input w
+
+\begin{enumerate}[1)]
+
+\item Reject if not in the form $a + b = c$.
+
+% I'm making the two strings the same length by filling in the blanks with zeros 
+% so I don't have to think about them. I assumed a has at least one character though...
+
+
+% Sub-Case: Not Carrying
+\item Case: Not Carrying
+
+    \begin{enumerate}[(2.a)]
+    
+    % Step : evaulate the right-most character in a
+    \item Return tape head to beginning of string. Scan right until the first marked character. Move tape head left one character. If the + character is reached, stop scan and move tape head left one character. If the character is a 0, mark character and go to step 2.b. If it's a blank, go to step 2.b. If the character is a 1, mark character go to step 2.c.
+
+    % Step (b): A = blank/0. evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If you reach a +, go to step 2.d. If the character is 0, mark and go to step 2.d. If you reach a +, go to step 2.d. If the character is a 1, mark and go to step 2.e.
+    
+    % Step (c): A = 1, evaluate right-most character in b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If you reach a plus, go to 2.e. If the character is 0, mark and go to Step 2.e.  If the character is a 1, mark and go to Step 2.f.
+    
+    % Step (d): a = 0, b = blank/0-> (2)
+    \item Scan right until end of input string. Scan left until the first unmarked character. If you reach a =, ACCEPT. Reject if character is 1. If it's a zero, mark it and return to step 2.
+    
+    % Step (e): a = 1, b = blank/0 -> (2)
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0 or blank, If it's a 1, mark character, return to Step 2.
+    
+    % Step (f): a = 1, b = 1 -> (3)
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1 or blank. Mark character, go to Step 3.
+    
+
+    \end{enumerate}
+    
+    
+% Sub-Cases: Carrying
+\item Case: Carrying
+
+    \begin{enumerate}[(3.a)]
+    
+    % Step a : Evaluate a
+    \item Return tape head to beginning of string. Scan right until the first marked character. Go left one. If you reach a blank, go to 3.b. If the + character is reached, stop scan and move tape head left one character. If the character is marked, go to Step 3.b. If the character is 0, mark character and go to step 3.b. If the character is 1, mark character go to step 3.c.
+    
+    % Step b: A = 0 or blank, evaluate b
+    \item Return tape head to beginning of string. Scan right until the = character. Scan left until the first unmarked character. If the + character is reached go to step 3.d. If the character is 0, mark and go to step 3.d.  If the character is a 1, mark and go to Step 3.e.
+    
+    % Step c: A = 1, evaluate b
+    \item Return tape head to beginning of string. Scan right until the = character. scan left until the first unmarked character. If the + character is reached, go to step 3.d. If the character is 0, mark and go to Step 3.e.  If the character is a 1, mark and go to step Step 3.f.
+    
+    % Step d: a = 0,b = 0/blank
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0 or a blank. If it's a 1, mark character, return to Step 2.
+    
+    % Step e: a = 1, b = 0/blank
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 1. Return and repeat Step 2.
+    
+    % Step f: a = 1, b = 1
+    \item Scan right until end of input string. Scan left until the first unmarked character. Reject if character is 0 or a blank. If it is a 1, cross it out and go to Step 3."
+    
+
+    \end{enumerate}
+    
 
 
 \end{enumerate}
@@ -41,13 +126,69 @@ the class of Turing-recognizable languages.
 \begin{enumerate}[a)]
 
 \item Union
+
+\begin{proof}
+
+Let M$_{1}$ be a Turing Machine for decidable L$_{1}$ and M$_{2}$ be a Turing Machine for decidable L$_{2}$. A Turing Machine M for L$_{1} \cup$ L$_{2}$ can be constructed such that:
+
+"On input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ accepts, accept.
+\item Simulate M$_{2}$ with input w. If M$_{1}$ accepts, accept. Otherwise reject"
+\end{enumerate}
+
+The decidable Turing Machine M can be constructed to evaluate L$_{1} \cup$ L$_{2}$ which accepts if either M$_{1}$ or M$_{2}$ accepts and rejects if both reject, thus Turing-decidable languages are closed under union.
+
+\end{proof}
+
 \item Intersection
+
+\begin{proof}
+
+Let M$_{1}$ be a Turing Machine for decidable L$_{1}$ and M$_{2}$ be a Turing Machine for decidable L$_{2}$. A Turing Machine M for L$_{1} \cap$ L$_{2}$ can be constructed such that:
+\\"On input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ rejects, reject.
+\item Simulate M$_{2}$ with input w. If M$_{1}$ rejects, reject. Otherwise accept."
+\end{enumerate}
+
+The decidable Turing Machine M can be constructed to evaluate L$_{1} \cap$ L$_{2}$ which rejects if either M$_{1}$ or M$_{2}$ reject and accepts if both accept, thus Turing-decidable languages are closed under intersection.
+\end{proof}
+
 \item Complement
+
+\begin{proof}
+
+Let M$_{1}$ be a decidable Turing Machine for L$_{1}$. A decidable Turing Machine M for L$'$ can be constructed such that:
+\\"On input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ accepts, reject. Otherwise accept."
+\end{enumerate}
+
+The decidable Turing Machine M can be constructed to evaluate L$'$, thus Turing-decidable languages are closed under complement.
+
+\end{proof}
 
 \end{enumerate}
 
 
 \paragraph{Problem 4} Show that the Turing-recognizable languages are closed under concatenation.
+% David's sreaming comment:  WHY DOES THIS JUST FEEL LIKE INTERSECTION?
+% Sasha's cool, collected response: Because it's very similar.  :) 
+
+\begin{proof}
+Let M$_{1}$ be a Turing Machine for recognizable L$_{1}$ and M$_{2}$ be a Turing Machine for recognizable L$_{2}$.  A Turing Machine M for L$_{1} \circ $ L$_{2}$ can be constructed such that:
+\\"On input w:
+
+\begin{enumerate} [1.]
+\item Simulate M$_{1}$ with input w. If M$_{1}$ rejects, reject. If M$_{1}$ accepts, go to Step 2.
+\item Simulate M$_{2}$ with input w. If M$_{2}$ rejects, reject. If M$_{2}$ accepts, accept."
+\end{enumerate}
 
 
+\end{proof}
+\end{enumerate}
 \end{document}
