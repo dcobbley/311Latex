@@ -24,7 +24,7 @@ $F =$ "on input $(\langle M \rangle , W)$:
 \begin{enumerate}
 \item Construct M'
 $M' = "On input x$:
-\begin{enumerate}
+\begin{enumerate}[1]
 \item if $ W = \epsilon$, Reject
 \item Run M on W.
  If it accepts W, Accept X.
@@ -34,26 +34,26 @@ $M' = "On input x$:
 \end{enumerate}
 
 If M accepts W:  L(M') = $\Sigma*$
-If M Rejects W:  L(M') = \empty
-If M loops on W: L(M') = \empty
---------------------------------------------------
+\\If M Rejects W:  L(M') = $\emptyset$
+\\If M loops on W: L(M') = $\emptyset$
+\\--------------------------------------------------
 Other Strategy, not mapping just reduction
 \begin{enumerate}
 \item Assume $ALL_{TM}$ is decidable
 \item Let R be a TM that deciceds $ALL_{TM}$
 \item Construct S
- $S = ``On input X$:
-\begin{enumerate}
+\\ $S =$ ``On input $X$:
+\begin{enumerate}[1]
 \item Accept X"
 \end{enumerate}
-\item Run $EQ_{TM}$ on input $(\langle M \rangle and \langle M' \rangle)$ GET RID OF PARENTHESIS...
+\item Run $EQ_{TM}$ on input $\langle M \rangle and \langle M' \rangle$ 
  If $EQ_{TM}$ accepts, Accept. 
  If $EQ_{TM}$ rejects, Reject."
 Since $ALL_{TM}$ is reducible to $EQ_{TM} and EQ_{TM}$ is undecidable, $ALL_{TM}$ is undecidable.
 \end{enumerate}
 
 
-\paragraph{Problem 2} A \textit{useless state} in a Turing machine is one that is never entered on any input string. Consider the problem of determining whether a Turing Machine has any useless states. Formulate this problem as a language and show that it is undecidable.
+\paragraph{Problem 2} A \textit{useless state} in a Turing machine is one that is never entered on any input string. Consider the problem of determining whether a Turing Machine has any useless states. Formulate this problem as a language and show that it is undecidable."
 
 %We need to mark off every state in a machine for every possible string, if any are missed its a useless 
 %State. But this is an infinite problem. Is this problem reducable somehow??
