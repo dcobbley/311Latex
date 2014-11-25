@@ -21,17 +21,16 @@
 $S =$ ``On input $\langle M \rangle$ :
 show that $ALL_{TM}$ is undecidable
 $F =$ "on input $(\langle M \rangle , W)$:
-\begin{enumerate} [1.]
+\begin{enumerate}
 \item Construct M'
-M' = "On input x:
-\begin{enumerate [1.]
-\item if W = \epsilon, Reject
+$M' = "On input x$:
+\begin{enumerate}
+\item if $ W = \epsilon$, Reject
 \item Run M on W.
  If it accepts W, Accept X.
  If it Rejects W, Reject x"
 \end{enumerate}
-\item Output \langle M' \rangle"
-\end{enumerate}
+\item Output $\langle M' \rangle$"
 \end{enumerate}
 
 If M accepts W:  L(M') = $\Sigma*$
@@ -50,7 +49,7 @@ Other Strategy, not mapping just reduction
 \item Run $EQ_{TM}$ on input $(\langle M \rangle and \langle M' \rangle)$ GET RID OF PARENTHESIS...
  If $EQ_{TM}$ accepts, Accept. 
  If $EQ_{TM}$ rejects, Reject."
-Since $ALL_{TM}$ is reducible to $EQ_{TM} and $EQ_{TM}$ is undecidable, $ALL_{TM}$ is undecidable.
+Since $ALL_{TM}$ is reducible to $EQ_{TM} and EQ_{TM}$ is undecidable, $ALL_{TM}$ is undecidable.
 \end{enumerate}
 
 
