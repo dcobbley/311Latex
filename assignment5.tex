@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsthm,tabu,enumerate,tikz}
 \usepackage[margin=1in]{geometry}
+\usepackage{verbatim} % Allows Multi-line comments 
 \usetikzlibrary{automata,positioning}
 \newcommand{\encode}[1]{\langle #1 \rangle}
 
@@ -18,57 +19,139 @@
 \[ALL_{TM} = \{ \langle M \rangle \;|\; Where M \mbox{ is a $TM$ and $L(M)$ = $\Sigma$*}\} \]
 
 
-$S =$ ``On input $\langle M \rangle$ :
-show that $ALL_{TM}$ is undecidable
-$F =$ "on input $(\langle M \rangle , W)$:
-\begin{enumerate}
-\item Construct M'
-$M' = "On input x$:
-\begin{enumerate}[1]
-\item if $ W = \epsilon$, Reject
-\item Run M on W.
- If it accepts W, Accept X.
- If it Rejects W, Reject x"
-\end{enumerate}
-\item Output $\langle M' \rangle$"
-\end{enumerate}
+% I couldn't figure out a way to write the EQ proof, so I did A_TM instead
+\begin{proof}
+    Assume $ALL_{TM}$ is decidable. Let $R$ be a TM that decides $ALL_{TM}$.  Use $R$ to construct TM $S$ that decides $A_{TM}$.
+    \begin{enumerate}
+        \item $S$ = ``On input $\langle M, w \rangle$:
+            \begin{enumerate}[1.]
+            \item Construct $M'$ that accepts all inputs.
+            \item Run $R$ on input $\langle M' \rangle$. If $R$ accepts, ACCEPT. Otherwise REJECT.''
+            \end{enumerate}
 
-If M accepts W:  L(M') = $\Sigma*$
-\\If M Rejects W:  L(M') = $\emptyset$
-\\If M loops on W: L(M') = $\emptyset$
-\\--------------------------------------------------
-Other Strategy, not mapping just reduction
-\begin{enumerate}
-\item Assume $ALL_{TM}$ is decidable
-\item Let R be a TM that deciceds $ALL_{TM}$
-\item Construct S
-\\ $S =$ ``On input $X$:
-\begin{enumerate}[1]
-\item Accept X"
-\end{enumerate}
-\item Run $EQ_{TM}$ on input $\langle M \rangle and \langle M' \rangle$ 
- If $EQ_{TM}$ accepts, Accept. 
- If $EQ_{TM}$ rejects, Reject."
-Since $ALL_{TM}$ is reducible to $EQ_{TM} and EQ_{TM}$ is undecidable, $ALL_{TM}$ is undecidable.
-\end{enumerate}
+        %I'm not 100% sure this is the right direction of which is reducible to which...
+        Since $ALL_{TM}$ is reducible to $A_{TM}$ and $A_{TM}$ is undecidable, $ALL_{TM}$ is undecidable.
+    \end{enumerate}
+    \end{proof}
 
+
+
+    
+    \begin{comment}
+        $S =$ ``On input $\langle M \rangle$ :
+        show that $ALL_{TM}$ is undecidable
+        $F =$ "on input $(\langle M \rangle , W)$:
+        \begin{enumerate}
+        \item Construct M'
+        $M' = "On input x$:
+        \begin{enumerate}[1]
+        \item if $ W = \epsilon$, Reject
+        \item Run M on W.
+         If it accepts W, Accept X.
+         If it Rejects W, Reject x"
+        \end{enumerate}
+        \item Output $\langle M' \rangle$"
+        \end{enumerate}
+        
+        If M accepts W:  L(M') = $\Sigma*$
+        \\If M Rejects W:  L(M') = $\emptyset$
+        \\If M loops on W: L(M') = $\emptyset$
+        \\--------------------------------------------------
+        Other Strategy, not mapping just reduction
+    
+    \begin{proof}
+    Assume $ALL_{TM}$ is decidable. Let $R$ be a TM that decides $ALL_{TM}$.  Use $R$ to construct TM $S$ that decides $ALL_{TM}$.
+    \begin{enumerate}
+        \item " On input $\langle M, M' \rangle$:
+        \\ $S =$ ``On input $x$:
+            \begin{enumerate}[1.]
+            \item Accept X"
+            \end{enumerate}
+        \item Run $EQ_{TM}$ on input $\langle M \rangle and \langle M' \rangle$ 
+         If $EQ_{TM}$ accepts, Accept. 
+         If $EQ_{TM}$ rejects, Reject."
+    \end{enumerate}
+     Since $ALL_{TM}$ is reducible to $EQ_{TM}$ and $EQ_{TM}$ is undecidable, $ALL_{TM}$ is undecidable.
+    \end{proof}
+    \end{comment}
+    
+    
+    
 
 \paragraph{Problem 2} A \textit{useless state} in a Turing machine is one that is never entered on any input string. Consider the problem of determining whether a Turing Machine has any useless states. Formulate this problem as a language and show that it is undecidable."
+ 
+%Winner
+\begin{proof}  
+    Assume $U_{TM}$ is decidable where $U_{TM}$ = \{ $\langle M, q \rangle$  $|$ $M$ is a TM and $q$ is a useless state\}. Let R be a TM that decides $U_{TM}$. Use $R$ to construct TM $S$ that decides $E_{TM}$.
+    \begin{enumerate}
+    \item S = ``On input $\langle M \rangle$:
+    \begin{enumerate} [1.]
+    \item Run $R$ on input $\langle M, q_{accept} \rangle$ where $q_{accept}$ is the accept state of $M$.
+    \\ \\ - If $R$ accepts, ACCEPT. If $R$ rejects, REJECT.''
+    \end{enumerate}
+\end{enumerate}
 
-%We need to mark off every state in a machine for every possible string, if any are missed its a useless 
-%State. But this is an infinite problem. Is this problem reducable somehow??
+This TM will accept only when the $L(M)$ is empty, meaning the start state is never entered on any input and is therefore a useless state. Since $E_{TM}$ is undecidable and $U_{TM}$ is reducible to $E_{TM}$, $U_{TM}$ is undecidable.   
 
+\end{proof}
+ 
+ 
+    
+    %We need to mark off every state in a machine for every possible string, if any are missed its a useless 
+    %State. But this is an infinite problem. Is this problem reducable somehow??
 
-\paragraph{Problem 3} If A $\leq_m$ B and B is a regular language, does this imply that A
+    \begin{comment}
+    \begin{proof}  
+    
+    Assume, $U_{TM}$ is decidable. Let R = the TM that decides $U_{TM}$.
+    \\S = TM that decides $E_{TM}$
+    \\Proof by contradiction\\
+    $HALT_{TM}$ = \{$\langle M,W \rangle$ \;|\; M halts on W \} $U_{TM} \leq_m HALT_{TM}$
+    \\-Assume $U_{TM}$ is decidable. Let R = decider for $U_{TM}$
+    \\-Construct S that decides $HALT_{TM} using R$.
+    S=``On input $\langle M,W \rangle$:
+    \begin{enumerate}
+    \item Run R n $\langle M, q_{accept} \rangle$ $q_{accept} \in S$
+    \\-If R accepts, S accepts
+    \\-If R rejects, Reject"
+    \end{enumerate}
+    Because $U_{TM}$ is reducible to $HALT_{TM}$,  and $HALT_{TM}$ is undecidable, $U_{TM} is undecidable$.
+    \end{proof}
+    -------------------------------------------
+    \end{comment}
+    
+
+    
+    
+\paragraph{Problem 3} If $A$ $\leq_m$ $B$ and $B$ is a regular language, does this imply that $A$
 is a regular language? Why or why not?
 
+\paragraph{} No because it is possible to create a computable function such that for every string $w$ that is an element of some context-free language $A$, the result of the function on the same input $w$ is an element of some regular language $B$. Because a context-free language can be mapping-reducible to a regular language, the difficulty class of $B$ is not guaranteed to be equal to or harder than $A$'s based on the property of regularity alone. 
+\paragraph{}For example, let $A$ = \{$0^n1^n$ $|$ $n\geq 1$ \} and $B$ = \{0\}. Suppose there is some TM $M$ that is constructed with the function f: \{$0, 1\}^*$ $\rightarrow$ \{{$0, 1\}^*$ where on any input string $w$ = $0^+1^+$, the function outputs $0$. Otherwise it outputs $1$.
 
 
 \paragraph{Problem 4} Prove that the language
 \[LOOP_{TM} = \{ \langle M \rangle \;|\; M \mbox{ is a $TM$ and M loops on all inputs}\} \]
 is not recognizable.
 \begin{proof}
-$S= $``On input $\langle M \rangle$ : Show that  
+Assume $LOOP_{TM}$ is decidable. Let $R$ be a TM that decides for $LOOP_{TM}$.  Use $R$ to construct TM $S$ that decides $A_{TM}$.
+\begin{enumerate}
+\item S = ``On input $\langle M, w \rangle$:
+\begin{enumerate}[1.]
+\item Construct $M'$.
+\\$M'$ = ``On input $x$:
+\begin{enumerate}[1.]
+\item Run $R$ on $w$
+\\ - If $R$ accepts, ACCEPT x.
+\\ - If $R$ rejects, REJECT x."
+% This means that M' will only accept or reject (halt) if w never does, which is impossible!
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+The construction of this machine proves a contradiction because $LOOP_{TM}$ is reducible to $A_{TM}$ and $A_{TM}$ is undecidable, so $LOOP_{TM}$ is also undecidable. Let $\overline{LOOP_{TM}}$ = \{ $\langle M, w \rangle$ $|$ M is a TM that loops on some inputs\}. There is a TM $T$ that recognizes $\overline{LOOP_{TM}}$ where given a string $w \in \Sigma^*$ if $w \in L(T)$, $T$ will accept and if $w \notin L(T)$ $T$ either rejects or loops. Because $LOOP_{TM}$ is undecidable and $\overline{LOOP_{TM}}$ is recognizable, $LOOP_{TM}$ is not recognizable.
+
+% If we can prove that the complement of the language is recognizable, that will prove that the
+% language is not recognizable (otherwise it would be decidable and recognizable).
 
 
 \end{proof}
